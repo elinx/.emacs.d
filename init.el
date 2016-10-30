@@ -300,3 +300,15 @@
 	    (backward-delete-char (- cur-pos beg-of-line-pos))
 	  (backward-kill-word 1))))))
 (global-set-key (kbd "M-DEL") 'elinx/delete-till-the-beginning-of-line)
+
+(defun elinx/copy-region-or-current-line (beg end)
+  "copy current line if no region selected"
+  (interactive "r")
+  (let ((cur-pos (point)))
+    (if (region-active-p)
+	(kill-ring-save beg end)
+      (progn
+	(kill-whole-line)
+	(yank)
+	(goto-char cur-pos)))))
+(global-set-key (kbd "M-w") 'elinx/copy-region-or-current-line)
