@@ -154,6 +154,7 @@
  '(helm-gtags-auto-update t)
  '(helm-gtags-ignore-case t)
  '(helm-gtags-path-style (quote relative))
+ '(save-place t nil (saveplace))
  '(tool-bar-mode nil))
 
 ;; key bindings
@@ -320,6 +321,10 @@
 (add-hook 'after-init-hook '(lambda () (sr-speedbar-toggle)))
 (add-hook 'speedbar-mode-hook '(lambda () (linum-mode -1)))
 (require 'projectile-speedbar)
-(with-current-buffer sr-speedbar-buffer-name
-  (setq window-size-fixed 'width))
 
+;;; frame parameters
+;; (add-to-list 'default-frame-alist '(border-width . 0))
+;; (add-to-list 'default-frame-alist '(internal-border-width . 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(right-fringe . 0))
+(add-to-list 'default-frame-alist '(left-fringe . 0))

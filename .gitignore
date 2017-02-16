@@ -1,3 +1,5 @@
 *.eld
 auto-save-list
 recentf
+session.*
+places
