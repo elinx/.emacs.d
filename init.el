@@ -318,9 +318,11 @@
 
 ;;; sr-speedbar
 (require 'sr-speedbar)
+(setq speedbar-use-images nil)
 (add-hook 'after-init-hook '(lambda () (sr-speedbar-toggle)))
 (add-hook 'speedbar-mode-hook '(lambda () (linum-mode -1)))
 (require 'projectile-speedbar)
+(global-set-key (kbd "C-<f2>") 'projectile-speedbar-open-current-buffer-in-tree)
 
 ;;; frame parameters
 ;; (add-to-list 'default-frame-alist '(border-width . 0))

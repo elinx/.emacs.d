@@ -132,7 +132,7 @@ Set to nil to disable projectile speedbar. Default is t."
 
 (defun projectile-speedbar-expand-line-list (&optional arg)
   (when arg
-    (re-search-forward (concat " " (car arg) "$"))
+    (re-search-forward (concat " " (car arg) ""))
     (speedbar-expand-line (car arg))
     (speedbar-next 1)
     (projectile-speedbar-expand-line-list (cdr arg))))
@@ -140,11 +140,13 @@ Set to nil to disable projectile speedbar. Default is t."
 (defun projectile-speedbar-open-current-buffer-in-tree ()
   (interactive)
   (let* ((root-dir (projectile-project-root))
-         (original-buffer-file-directory (file-name-directory
-                                          (projectile-file-truename (buffer-file-name))))
+         ;; (original-buffer-file-directory (file-name-directory
+                                          ;; (projectile-file-truename (buffer-file-name))))
+         (original-buffer-file-directory (buffer-file-name))
          (relative-buffer-path (car (cdr (split-string original-buffer-file-directory
                                                        (regexp-quote root-dir)))))
-         (parents (butlast (split-string relative-buffer-path "/")))
+         ;; (parents (butlast (split-string relative-buffer-path "/")))
+         (parents (split-string relative-buffer-path "/"))
          (original-window (get-buffer-window)))
     (if projectile-speedbar-enable
         (save-excursion
