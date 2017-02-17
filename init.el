@@ -319,10 +319,12 @@
 ;;; sr-speedbar
 (require 'sr-speedbar)
 (setq speedbar-use-images nil)
+(setq speedbar-button-face nil)
 (add-hook 'after-init-hook '(lambda () (sr-speedbar-toggle)))
 (add-hook 'speedbar-mode-hook '(lambda () (linum-mode -1)))
 (require 'projectile-speedbar)
 (global-set-key (kbd "C-<f2>") 'projectile-speedbar-open-current-buffer-in-tree)
+(set-face-attribute 'speedbar-button-face nil :height 90)
 
 ;;; frame parameters
 ;; (add-to-list 'default-frame-alist '(border-width . 0))
