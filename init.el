@@ -117,8 +117,8 @@
 
 
 ;;; spaceline config
-(require 'spaceline-config)
-(spaceline-spacemacs-theme)
+;; (require 'spaceline-config)
+;; (spaceline-spacemacs-theme)
 
 
 ;;; window-numbering-mode
@@ -151,6 +151,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(helm-gtags-auto-update t)
  '(helm-gtags-ignore-case t)
  '(helm-gtags-path-style (quote relative))
@@ -330,3 +333,12 @@
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(right-fringe . 0))
 (add-to-list 'default-frame-alist '(left-fringe . 0))
+
+(avy-setup-default)
+(global-set-key (kbd "C-:") 'avy-goto-char)
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
+(global-set-key (kbd "M-g f") 'avy-goto-line)
+(global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(global-set-key (kbd "M-g e") 'avy-goto-word-0)
+
+(which-function-mode 1)
