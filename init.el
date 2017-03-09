@@ -301,16 +301,14 @@
 	  (backward-kill-word 1))))))
 (global-set-key (kbd "M-DEL") 'elinx/delete-till-the-beginning-of-line)
 
-(defun elinx/copy-region-or-current-line (beg end)
+(defun elinx/copy-region-or-current-line ()
   "copy current line if no region selected"
-  (interactive "r")
-  (let ((cur-pos (point)))
-    (if (region-active-p)
-	(kill-ring-save beg end)
-      (progn
-	(kill-whole-line)
-	(yank)
-	(goto-char cur-pos)))))
+  (interactive)
+  (if (region-active-p)
+      (kill-ring-save nil nil t)
+    (progn
+      (kill-ring-save (line-beginning-position) (line-end-position))
+      (message "Line Copied"))))
 (global-set-key (kbd "M-w") 'elinx/copy-region-or-current-line)
 
 ;; fullscreen
