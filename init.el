@@ -119,6 +119,9 @@
 ;;; spaceline config
 ;; (require 'spaceline-config)
 ;; (spaceline-spacemacs-theme)
+(setq sml/theme 'respectful)
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
 
 
 ;;; window-numbering-mode
@@ -153,7 +156,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(helm-gtags-auto-update t)
  '(helm-gtags-ignore-case t)
  '(helm-gtags-path-style (quote relative))
@@ -261,7 +264,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight normal :height 120 :width normal))))
+ '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight semi-bold :height 120 :width normal))))
  '(font-lock-type-face ((t (:foreground "#b58900")))))
 
 
@@ -305,7 +308,7 @@
 (global-set-key (kbd "M-DEL") 'elinx/delete-till-the-beginning-of-line)
 
 (defun elinx/copy-region-or-current-line ()
-  "copy current line if no region selected"
+  "copy current or active region to kill ring"
   (interactive)
   (if (region-active-p)
       (kill-ring-save nil nil t)
@@ -335,8 +338,8 @@
 (add-to-list 'default-frame-alist '(left-fringe . 0))
 
 (avy-setup-default)
-(global-set-key (kbd "C-:") 'avy-goto-char)
-(global-set-key (kbd "C-'") 'avy-goto-char-2)
+;; (global-set-key (kbd "C-:") 'avy-goto-char)
+(global-set-key (kbd "M-g c") 'avy-goto-char-2)
 (global-set-key (kbd "M-g f") 'avy-goto-line)
 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 (global-set-key (kbd "M-g e") 'avy-goto-word-0)
