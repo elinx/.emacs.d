@@ -19,4 +19,4 @@
                    :action 'elinx/jump-to-word)
         :buffer "*Words of Current Line*"))
 
-(global-set-key (kbd "C-x w") 'elinx/list-words-of-current-line)
+(global-set-key (kbd "M-g e") 'elinx/list-words-of-current-line)

@@ -337,11 +337,4 @@
 (add-to-list 'default-frame-alist '(right-fringe . 0))
 (add-to-list 'default-frame-alist '(left-fringe . 0))
 
-(avy-setup-default)
-;; (global-set-key (kbd "C-:") 'avy-goto-char)
-(global-set-key (kbd "M-g c") 'avy-goto-char-2)
-(global-set-key (kbd "M-g f") 'avy-goto-line)
-(global-set-key (kbd "M-g w") 'avy-goto-word-1)
-(global-set-key (kbd "M-g e") 'avy-goto-word-0)
-
 (which-function-mode 1)
