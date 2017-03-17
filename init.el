@@ -1,28 +1,29 @@
 ;;; packages repositories
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-;;(add-to-list 'package-archives '("elpa" . "http://elpa.gnu.org/packages/"))
+
+(setq package-archives '(
+			 ("gnu" . "http://elpa.emacs-china.org/gnu/")
+			 ("melpa" . "http://elpa-emacs-china.org/melpa/")))
+
 (package-initialize)
 
+;;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
 (load-theme 'solarized t)
 ;; (set-frame-parameter nil 'background-mode 'light)
 (set-frame-parameter nil 'background-mode 'dark)
-;; (add-hook 'after-make-frame-functions
-;;           (lambda (frame)
-;;             (let ((mode (if (display-graphic-p frame) 'dark 'light)))
-;;               (set-frame-parameter frame 'background-mode mode)
-;;               (set-terminal-parameter frame 'background-mode mode))
-;;             (enable-theme 'solarized)))
+
 
 ;;; yes => y, no => n
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-message t)
 
+
 ;;; global setups
 (global-linum-mode)
 
+
+;;; package auto update or install
 (defconst cool-packages
   '(anzu
     company
@@ -52,7 +53,7 @@
     (unless (package-installed-p package)
       (package-install package))))
 
-;; (install-packages)			
+(install-packages)
 
 
 ;;; helm configure
@@ -102,7 +103,6 @@
 (setq company-idle-delay 0)
 
 
-
 ;;; flycheck mode
 (add-hook 'c++-mode-hook 'flycheck-mode)
 (add-hook 'c-mode-hook 'flycheck-mode)
@@ -110,13 +110,11 @@
   '(add-to-list 'flycheck-mode-hook #'flycheck-irony-setup))
 
 
-
 ;;; eldoc mode
 (add-hook 'irony-mode-hook 'irony-eldoc)
 
 
-
-;;; spaceline config
+;;; mode line config
 ;; (require 'spaceline-config)
 ;; (spaceline-spacemacs-theme)
 (setq sml/theme 'respectful)
@@ -128,13 +126,11 @@
 (window-numbering-mode)
 
 
-
 ;;; anzu mode
 (global-anzu-mode +1)
 ;;(anzu-mode +1)
 (global-set-key [remap query-replace] 'anzu-query-replace)
 (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
-
 
 
 ;;; c style
@@ -147,6 +143,7 @@
 (add-hook 'c-mode-hook 'helm-gtags-mode)
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
+
 
 ;; customize
 (custom-set-variables
@@ -190,10 +187,8 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 
-
 ;;; comment
 (global-set-key (kbd "M-;") 'comment-dwim-2)
-
 
 
 ;;; swoop
@@ -221,14 +216,15 @@
 (require 'clean-aindent-mode)
 (add-hook 'prog-mode-hook 'clean-aindent-mode)
 
+
 ;; Package: dtrt-indent
 (require 'dtrt-indent)
 (dtrt-indent-mode 1)
 
+
 ;; Package: ws-butler
 (require 'ws-butler)
 (add-hook 'prog-mode-hook 'ws-butler-mode)
-
 
 
 ;; Package: smartparens
@@ -237,7 +233,6 @@
 (setq sp-autoskip-closing-pair 'always)
 (setq sp-hybrid-kill-entire-symbol nil)
 (sp-use-paredit-bindings)
-
 (show-smartparens-global-mode +1)
 (smartparens-global-mode 1)
 
@@ -245,11 +240,13 @@
 ;; disable the toolbar
 (tool-bar-mode -1)
 
+
 ;; redirect temp files
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
 
 ;; and auto delete the back files
 (message "Deleting old backup files...")
@@ -274,51 +271,9 @@
 ;;; shell
 (setq shell-file-name "/bin/bash")
 
-;;; toggle beginning of line or fist char of current line by stroke "C-a"
-(defun elinx/jump-to-beg-of-line-or-first-character()
-  "jump to the beginning of line or the fist character of current line"
-  (interactive)
-  (if (bolp)
-      (back-to-indentation)
-    (beginning-of-line)))
-(global-set-key (kbd "C-a") 'elinx/jump-to-beg-of-line-or-first-character)
 
 ;;; select beginning with stroking "M-SPC"
 (global-set-key (kbd "M-SPC") 'set-mark-command)
-
-;;; kill region or current line by stroke "C-w"
-(defun elinx/kill-region-or-current-line (beg end)
-  "kill selected region or current line"
-  (interactive "r")
-  (if (region-active-p)
-      (kill-region beg end)
-    (kill-whole-line)))
-(global-set-key (kbd "C-w") 'elinx/kill-region-or-current-line)
-
-(defun elinx/delete-till-the-beginning-of-line()
-  "delete backward till the beginning of current line"
-  (interactive)
-  (let ((cur-pos (point)))
-    (beginning-of-line)
-    (let ((beg-of-line-pos (point)))
-      (goto-char cur-pos)
-      (backward-word)
-      (let ((backward-word-pos (point)))
-	(goto-char cur-pos)
-	(if (> beg-of-line-pos backward-word-pos)
-	    (backward-delete-char (- cur-pos beg-of-line-pos))
-	  (backward-kill-word 1))))))
-(global-set-key (kbd "M-DEL") 'elinx/delete-till-the-beginning-of-line)
-
-(defun elinx/copy-region-or-current-line ()
-  "copy current or active region to kill ring"
-  (interactive)
-  (if (region-active-p)
-      (kill-ring-save nil nil t)
-    (progn
-      (kill-ring-save (line-beginning-position) (line-end-position))
-      (message "Line Copied"))))
-(global-set-key (kbd "M-w") 'elinx/copy-region-or-current-line)
 
 ;; fullscreen
 ;; alias emacs=emacs -fs
@@ -347,3 +302,7 @@
 
 (nyan-mode t)
 (prettify-symbols-mode t)
+
+;;; customized functions
+(add-to-list 'load-path "~/.emacs.d/workspace/")
+(require 'main)

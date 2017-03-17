@@ -1,22 +1,10 @@
-;; list words of current line using helm framework
-(defvar elinx/words-alist '())
-
-(defun elinx/words-of-current-line ()
-  (save-excursion
-    (with-helm-current-buffer
-      (goto-char (line-beginning-position))
-      (cl-loop while (re-search-forward "\\b\\w+\\b" (line-end-position) t)
-        collect (list (match-string 0) (point))))))
-
-(defun elinx/jump-to-word (candidate)
-  (with-helm-current-buffer
-    (goto-char (car candidate))))
-
-(defun elinx/list-words-of-current-line ()
-  (interactive)
-  (helm :sources (helm-build-sync-source "Words of Current Line"
-                   :candidates 'elinx/words-of-current-line
-                   :action 'elinx/jump-to-word)
-        :buffer "*Words of Current Line*"))
+(require 'wordjump)
+(require 'utils)
 
 (global-set-key (kbd "M-g e") 'elinx/list-words-of-current-line)
+(global-set-key (kbd "C-a") 'elinx/jump-to-beg-of-line-or-first-character)
+(global-set-key (kbd "C-w") 'elinx/kill-region-or-current-line)
+(global-set-key (kbd "M-DEL") 'elinx/delete-till-the-beginning-of-line)
+(global-set-key (kbd "M-w") 'elinx/copy-region-or-current-line)
+
+(provide 'main)
